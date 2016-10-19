@@ -291,6 +291,7 @@ mime_exclude = x-tar,x-gzip,bz,lz,compress,zip,javascript,css,octet-stream,image
 					if (Metadata.RESOURCE_NAME_KEY.equalsIgnoreCase(m)
 							|| "dc:title".equalsIgnoreCase(m)
 							|| "title".equalsIgnoreCase(m)
+							|| "dc:description".equalsIgnoreCase(m)
 							|| "description".equalsIgnoreCase(m)
 							|| "keywords".equalsIgnoreCase(m)
 							|| Metadata.CONTENT_ENCODING.equalsIgnoreCase(m)
@@ -312,9 +313,10 @@ mime_exclude = x-tar,x-gzip,bz,lz,compress,zip,javascript,css,octet-stream,image
 			// Also Pick out particular metadata:
 			String contentType = metadata.get( Metadata.CONTENT_TYPE );
 			solr.addField(SolrFields.SOLR_CONTENT_TYPE, contentType);
-			solr.addField(SolrFields.SOLR_TITLE, metadata.get(DublinCore.TITLE));
+			solr.addField(SolrFields.SOLR_TITLE, 
+					metadata.get(DublinCore.TITLE)!=null?metadata.get(DublinCore.TITLE):metadata.get("title"));
 			solr.addField(SolrFields.SOLR_DESCRIPTION,
-					metadata.get(DublinCore.DESCRIPTION));
+					metadata.get(DublinCore.DESCRIPTION)!=null?metadata.get(DublinCore.DESCRIPTION):metadata.get("description"));
 			solr.addField(SolrFields.SOLR_KEYWORDS, metadata.get("keywords"));
 			solr.addField(SolrFields.SOLR_AUTHOR,
 					metadata.get(DublinCore.CREATOR));
